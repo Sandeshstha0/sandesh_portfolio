@@ -22,7 +22,7 @@
         {
             "id": "3",
             "title": "Email",
-            "link": "sandeshstha519@gmail.com"
+            "link": "https://mail.google.com/mail/?view=cm&fs=1&to=sandeshstha519@gmail.com"
         }
     ],
     "projects": [
@@ -87,18 +87,18 @@
         },
         "languages": [
             "Javascript",
-            "Java",
-            "CSS",
             "Python",
             "Golang"
         ],
         "frameworks": [
-            "React",
-            "Typescript",
+            "Next js",
+            "Nest js",
             "NodeJs"
         ],
         "others": [
-            "Figma"
+            "Figma",
+            "Github",
+            "Docker"
         ]
     }
 }

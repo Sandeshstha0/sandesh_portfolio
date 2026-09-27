@@ -1,191 +1,114 @@
-import { Popover } from "@headlessui/react";
-import { useTheme } from "next-themes";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Button from "../Button";
-// Local Data
-import data from "../../data/portfolio.json";
+import React from "react";
+import Link from "next/link";
 
-const Header = ({ handleWorkScroll, handleAboutScroll, isBlog }) => {
-  const router = useRouter();
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  const { name, showBlog, showResume } = data;
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
+const Header = ({ handleWorkScroll, handleAboutScroll }) => {
   return (
-    <>
-      <Popover className="block tablet:hidden mt-5">
-        {({ open }) => (
-          <>
-            <div className="flex items-center justify-between p-2 laptop:p-0">
-              <h1
-                onClick={() => router.push("/")}
-                className="font-medium p-2 laptop:p-0 link"
-              >
-                {name}.
-              </h1>
-
-              <div className="flex items-center">
-                {data.darkMode && (
-                  <Button
-                    onClick={() =>
-                      setTheme(theme === "dark" ? "light" : "dark")
-                    }
-                  >
-                    <img
-                      className="h-6"
-                      src={`/images/${
-                        theme === "dark" ? "moon.svg" : "sun.svg"
-                      }`}
-                    ></img>
-                  </Button>
-                )}
-
-                <Popover.Button>
-                  <img
-                    className="h-5"
-                    src={`/images/${
-                      !open
-                        ? theme === "dark"
-                          ? "menu-white.svg"
-                          : "menu.svg"
-                        : theme === "light"
-                        ? "cancel.svg"
-                        : "cancel-white.svg"
-                    }`}
-                  ></img>
-                </Popover.Button>
-              </div>
-            </div>
-            <Popover.Panel
-              className={`absolute right-0 z-10 w-11/12 p-4 ${
-                theme === "dark" ? "bg-slate-800" : "bg-white"
-              } shadow-md rounded-md`}
-            >
-              {!isBlog ? (
-                <div className="grid grid-cols-1">
-                  <Button onClick={handleWorkScroll}>Work</Button>
-                  <Button onClick={handleAboutScroll}>About</Button>
-                
-                  {showResume && (
-                    <Button
-                      onClick={() =>
-                        window.open("mailto:sandeshstha519@gmail.com")
-                      }
-                    >
-                      Resume
-                    </Button>
-                  )}
-
-                  <Button
-                    onClick={() => window.open("mailto:sandeshstha519@gmail.com")}
-                  >
-                    Contact
-                  </Button>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1">
-                  <Button onClick={() => router.push("/")} classes="first:ml-1">
-                    Home
-                  </Button>
-                 
-                  {showResume && (
-                    <Button
-                      onClick={() => router.push("/resume")}
-                      classes="first:ml-1"
-                    >
-                      Resume
-                    </Button>
-                  )}
-
-                  <Button
-                    onClick={() => window.open("mailto:sandeshstha519@gmail.com")}
-                  >
-                    Contact
-                  </Button>
-                </div>
-              )}
-            </Popover.Panel>
-          </>
-        )}
-      </Popover>
+    <header className="relative z-50 px-2 pt-5 laptop:px-0">
       <div
-        className={`mt-10 hidden flex-row items-center justify-between sticky ${
-          theme === "light" && "bg-white"
-        } dark:text-white top-0 z-10 tablet:flex`}
+        className="
+          flex
+          items-center
+          justify-between
+          rounded-2xl
+          border
+          border-blue-400/10
+          bg-[#07172f]/60
+          px-5
+          py-4
+          backdrop-blur-xl
+        "
       >
-        <h1
-          onClick={() => router.push("/")}
-          className="font-medium cursor-pointer mob:p-2 laptop:p-0"
-        >
-          {name}.
-        </h1>
-        {!isBlog ? (
-          <div className="flex">
-            <Button onClick={handleWorkScroll}>Work</Button>
-            <Button onClick={handleAboutScroll}>About</Button>
-            
-            {showResume && (
-              <Button
-                onClick={() => router.push("/resume")}
-                classes="first:ml-1"
-              >
-                Resume
-              </Button>
-            )}
+        {/* Logo */}
+        <div className="group cursor-pointer">
+          <div className="flex items-center gap-2">
+            <div
+              className="
+                h-2
+                w-2
+                rounded-full
+                bg-blue-500
+                shadow-[0_0_15px_rgba(59,130,246,0.8)]
+              "
+            />
 
-            <Button onClick={() => window.open("mailto:sandeshstha519@gmail.com")}>
-              Contact
-            </Button>
-            {mounted && theme && data.darkMode && (
-              <Button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              >
-                <img
-                  className="h-6"
-                  src={`/images/${theme === "dark" ? "moon.svg" : "sun.svg"}`}
-                ></img>
-              </Button>
-            )}
+            <span
+              className="
+                text-lg
+                font-bold
+                tracking-wide
+                text-white
+              "
+            >
+            <Link href="/">Portfolio</Link> 
+            </span>
           </div>
-        ) : (
-          <div className="flex">
-            <Button onClick={() => router.push("/")}>Home</Button>
-            {showBlog && (
-              <Button onClick={() => router.push("/blog")}>Blog</Button>
-            )}
-            {showResume && (
-              <Button
-                onClick={() => router.push("/resume")}
-                classes="first:ml-1"
-              >
-                Resume
-              </Button>
-            )}
+        </div>
 
-            <Button onClick={() => window.open("mailto:sandeshstha519@gmail.com")}>
-              Contact
-            </Button>
+        {/* Navigation */}
+        <nav className="flex items-center gap-2 tablet:gap-4">
+          <button
+            onClick={handleWorkScroll}
+            className="
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              font-medium
+              text-blue-100/60
+              transition-all
+              duration-300
+              hover:bg-blue-500/10
+              hover:text-blue-400
+            "
+          >
+            Work
+          </button>
 
-            {mounted && theme && data.darkMode && (
-              <Button
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              >
-                <img
-                  className="h-6"
-                  src={`/images/${theme === "dark" ? "moon.svg" : "sun.svg"}`}
-                ></img>
-              </Button>
-            )}
-          </div>
-        )}
+          <button
+            onClick={handleAboutScroll}
+            className="
+              rounded-lg
+              px-3
+              py-2
+              text-sm
+              font-medium
+              text-blue-100/60
+              transition-all
+              duration-300
+              hover:bg-blue-500/10
+              hover:text-blue-400
+            "
+          >
+            About
+          </button>
+
+          {/* Contact */}
+          <Link
+            href="/resume"
+            className="
+              hidden
+              rounded-lg
+              border
+              border-blue-400/20
+              bg-blue-500/10
+              px-4
+              py-2
+              text-sm
+              font-medium
+              text-blue-300
+              transition-all
+              duration-300
+              hover:border-blue-400/40
+              hover:bg-blue-500/20
+              hover:text-blue-200
+              tablet:block
+            "
+          >
+            Resume
+          </Link>
+        </nav>
       </div>
-    </>
+    </header>
   );
 };
 

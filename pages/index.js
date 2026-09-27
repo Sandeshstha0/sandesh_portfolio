@@ -7,23 +7,23 @@ import { useIsomorphicLayoutEffect } from "../utils";
 import { stagger } from "../animations";
 import Footer from "../components/Footer";
 import Head from "next/head";
-import Button from "../components/Button";
-import Link from "next/link";
 import Cursor from "../components/Cursor";
 
 // Local Data
 import data from "../data/portfolio.json";
+import IDCard from "../components/Idcard/IDCard";
 
 export default function Home() {
-  // Ref
+  // Refs
   const workRef = useRef();
   const aboutRef = useRef();
+
   const textOne = useRef();
   const textTwo = useRef();
   const textThree = useRef();
   const textFour = useRef();
 
-  // Handling Scroll
+  // Handling Work Scroll
   const handleWorkScroll = () => {
     window.scrollTo({
       top: workRef.current.offsetTop,
@@ -32,6 +32,7 @@ export default function Home() {
     });
   };
 
+  // Handling About Scroll
   const handleAboutScroll = () => {
     window.scrollTo({
       top: aboutRef.current.offsetTop,
@@ -40,63 +41,275 @@ export default function Home() {
     });
   };
 
+  // Text Animation
   useIsomorphicLayoutEffect(() => {
     stagger(
-      [textOne.current, textTwo.current, textThree.current, textFour.current],
-      { y: 40, x: -10, transform: "scale(0.95) skew(10deg)" },
-      { y: 0, x: 0, transform: "scale(1)" }
+      [
+        textOne.current,
+        textTwo.current,
+        textThree.current,
+        textFour.current,
+      ],
+      {
+        y: 40,
+        x: -10,
+        transform: "scale(0.95) skew(10deg)",
+      },
+      {
+        y: 0,
+        x: 0,
+        transform: "scale(1)",
+      }
     );
   }, []);
 
   return (
-    <div className={`relative ${data.showCursor && "cursor-none"}`}>
+    <div
+      className={`
+        relative
+        min-h-screen
+        overflow-hidden
+        bg-[#06142f]
+        text-white
+        ${data.showCursor && "cursor-none"}
+      `}
+    >
+      {/* Custom Cursor */}
       {data.showCursor && <Cursor />}
+
+      {/* Page Title */}
       <Head>
         <title>{data.name}</title>
       </Head>
 
-      <div className="gradient-circle"></div>
-      <div className="gradient-circle-bottom"></div>
+      {/* ================= BLUE BACKGROUND GLOW ================= */}
+
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        {/* Top right glow */}
+        <div
+          className="
+            absolute
+            -right-40
+            -top-40
+            h-[500px]
+            w-[500px]
+            rounded-full
+            bg-blue-600/20
+            blur-[120px]
+          "
+        ></div>
+
+        {/* Middle left glow */}
+        <div
+          className="
+            absolute
+            -left-40
+            top-[35%]
+            h-[450px]
+            w-[450px]
+            rounded-full
+            bg-cyan-500/10
+            blur-[120px]
+          "
+        ></div>
+
+        {/* Bottom glow */}
+        <div
+          className="
+            absolute
+            bottom-[-200px]
+            right-[15%]
+            h-[500px]
+            w-[500px]
+            rounded-full
+            bg-blue-700/20
+            blur-[140px]
+          "
+        ></div>
+      </div>
+
+      {/* ================= PAGE CONTAINER ================= */}
 
       <div className="container mx-auto mb-10">
+
+        {/* ================= HEADER ================= */}
+
         <Header
           handleWorkScroll={handleWorkScroll}
           handleAboutScroll={handleAboutScroll}
         />
-        <div className="laptop:mt-20 mt-10">
-          <div className="mt-5">
-            <h1
-              ref={textOne}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-4/5 mob:w-full laptop:w-4/5"
-            >
-              {data.headerTaglineOne}
-            </h1>
-            <h1
-              ref={textTwo}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineTwo}
-            </h1>
-            <h1
-              ref={textThree}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineThree}
-            </h1>
-            <h1
-              ref={textFour}
-              className="text-3xl tablet:text-6xl laptop:text-6xl laptopl:text-8xl p-1 tablet:p-2 text-bold w-full laptop:w-4/5"
-            >
-              {data.headerTaglineFour}
-            </h1>
+
+        {/* ================= HERO SECTION ================= */}
+
+        <div
+          className="
+            flex
+            flex-col
+            laptop:flex-row
+            items-center
+            laptop:items-start
+            justify-between
+            gap-10
+            laptop:gap-6
+            px-2
+            laptop:px-0
+          "
+        >
+          {/* ================= TEXT SECTION ================= */}
+
+          <div
+            className="
+              w-full
+              laptop:w-3/5
+              laptop:mt-16
+              mt-8
+            "
+          >
+            <div className="mt-5">
+
+              {/* Small introduction */}
+              <p
+                className="
+                  mb-5
+                  text-sm
+                  tablet:text-base
+                  font-medium
+                  uppercase
+                  tracking-[0.3em]
+                  text-blue-400
+                "
+              >
+               Let&apos;s build something
+              </p>
+
+              {/* Line 1 */}
+              <h1
+                ref={textOne}
+                className="
+                  p-1
+                  tablet:p-2
+                  text-2xl
+                  tablet:text-4xl
+                  laptop:text-5xl
+                  laptopl:text-6xl
+                  font-bold
+                  leading-tight
+                  text-white
+                "
+              >
+                {data.headerTaglineOne}
+              </h1>
+
+              {/* Line 2 */}
+              <h1
+                ref={textTwo}
+                className="
+                  p-1
+                  tablet:p-2
+                  text-2xl
+                  tablet:text-4xl
+                  laptop:text-5xl
+                  laptopl:text-6xl
+                  font-bold
+                  leading-tight
+                  text-blue-400
+                "
+              >
+                {data.headerTaglineTwo}
+              </h1>
+
+              {/* Line 3 */}
+              <h1
+                ref={textThree}
+                className="
+                  p-1
+                  tablet:p-2
+                  text-2xl
+                  tablet:text-4xl
+                  laptop:text-5xl
+                  laptopl:text-6xl
+                  font-bold
+                  leading-tight
+                  text-white
+                "
+              >
+                {data.headerTaglineThree}
+              </h1>
+
+              {/* Line 4 */}
+              <h1
+                ref={textFour}
+                className="
+                  p-1
+                  tablet:p-2
+                  text-2xl
+                  tablet:text-4xl
+                  laptop:text-5xl
+                  laptopl:text-6xl
+                  font-bold
+                  leading-tight
+                  text-blue-300
+                "
+              >
+                {data.headerTaglineFour}
+              </h1>
+            </div>
+
+            {/* Social Icons */}
+            <Socials className="mt-5" />
           </div>
 
-          <Socials className="mt-2 laptop:mt-5" />
-        </div>
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0" ref={workRef}>
-          <h1 className="text-2xl text-bold">Work.</h1>
+          {/* ================= ID CARD ================= */}
 
-          <div className="mt-5 laptop:mt-10 grid grid-cols-1 tablet:grid-cols-2 gap-4">
+          <div
+            className="
+              w-full
+              laptop:w-2/5
+              flex
+              justify-center
+              laptop:justify-end
+              mt-6
+              laptop:mt-16
+              mr-0
+              laptop:mr-10
+            "
+          >
+            <IDCard />
+          </div>
+        </div>
+
+        {/* ================= WORK ================= */}
+
+        <div
+          className="
+            mt-20
+            laptop:mt-32
+            p-2
+            laptop:p-0
+          "
+          ref={workRef}
+        >
+          <h1
+            className="
+              text-2xl
+              tablet:text-3xl
+              font-bold
+              text-white
+            "
+          >
+            Work<span className="text-blue-500">.</span>
+          </h1>
+
+          <div
+            className="
+              mt-8
+              laptop:mt-10
+              grid
+              grid-cols-1
+              tablet:grid-cols-2
+              gap-4
+            "
+          >
             {data.projects.map((project) => (
               <WorkCard
                 key={project.id}
@@ -109,9 +322,38 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-10 laptop:mt-30 p-2 laptop:p-0">
-          <h1 className="tablet:m-10 text-2xl text-bold">Services.</h1>
-          <div className="mt-5 tablet:m-10 grid grid-cols-1 laptop:grid-cols-2 gap-6">
+        {/* ================= SERVICES ================= */}
+
+        <div
+          className="
+            mt-20
+            laptop:mt-32
+            p-2
+            laptop:p-0
+          "
+        >
+          <h1
+            className="
+              tablet:m-10
+              text-2xl
+              tablet:text-3xl
+              font-bold
+              text-white
+            "
+          >
+            Services<span className="text-blue-500">.</span>
+          </h1>
+
+          <div
+            className="
+              mt-8
+              tablet:m-10
+              grid
+              grid-cols-1
+              laptop:grid-cols-2
+              gap-6
+            "
+          >
             {data.services.map((service, index) => (
               <ServiceCard
                 key={index}
@@ -121,13 +363,48 @@ export default function Home() {
             ))}
           </div>
         </div>
-       
-        <div className="mt-10 laptop:mt-40 p-2 laptop:p-0" ref={aboutRef}>
-          <h1 className="tablet:m-10 text-2xl text-bold">About.</h1>
-          <p className="tablet:m-10 mt-2 text-xl laptop:text-3xl w-full laptop:w-3/5">
+
+        {/* ================= ABOUT ================= */}
+
+        <div
+          className="
+            mt-20
+            laptop:mt-40
+            p-2
+            laptop:p-0
+          "
+          ref={aboutRef}
+        >
+          <h1
+            className="
+              tablet:m-10
+              text-2xl
+              tablet:text-3xl
+              font-bold
+              text-white
+            "
+          >
+            About<span className="text-blue-500">.</span>
+          </h1>
+
+          <p
+            className="
+              tablet:m-10
+              mt-5
+              text-xl
+              laptop:text-3xl
+              leading-relaxed
+              text-blue-100/80
+              w-full
+              laptop:w-3/5
+            "
+          >
             {data.aboutpara}
           </p>
         </div>
+
+        {/* ================= FOOTER ================= */}
+
         <Footer />
       </div>
     </div>
