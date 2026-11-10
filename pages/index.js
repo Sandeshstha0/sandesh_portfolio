@@ -44,12 +44,7 @@ export default function Home() {
   // Text Animation
   useIsomorphicLayoutEffect(() => {
     stagger(
-      [
-        textOne.current,
-        textTwo.current,
-        textThree.current,
-        textFour.current,
-      ],
+      [textOne.current, textTwo.current, textThree.current, textFour.current],
       {
         y: 40,
         x: -10,
@@ -59,7 +54,7 @@ export default function Home() {
         y: 0,
         x: 0,
         transform: "scale(1)",
-      }
+      },
     );
   }, []);
 
@@ -131,7 +126,6 @@ export default function Home() {
       {/* ================= PAGE CONTAINER ================= */}
 
       <div className="container mx-auto mb-10">
-
         {/* ================= HEADER ================= */}
 
         <Header
@@ -166,7 +160,6 @@ export default function Home() {
             "
           >
             <div className="mt-5">
-
               {/* Small introduction */}
               <p
                 className="
@@ -179,7 +172,7 @@ export default function Home() {
                   text-blue-400
                 "
               >
-               Let&apos;s build something
+                Let&apos;s build something
               </p>
 
               {/* Line 1 */}
@@ -299,27 +292,43 @@ export default function Home() {
           >
             Work<span className="text-blue-500">.</span>
           </h1>
+          <div className="mt-8 laptop:mt-10 space-y-12">
+            {data.projects.map((section) => (
+              <div key={section.id} className="w-full">
+                {/* Category Title */}
+                <h2 className="mb-6 text-2xl font-bold text-white">
+                  {section.title}
+                </h2>
 
-          <div
-            className="
-              mt-8
-              laptop:mt-10
-              grid
-              grid-cols-1
-              tablet:grid-cols-2
-              gap-4
-            "
-          >
-            {data.projects.map((project) => (
-              <WorkCard
-                key={project.id}
-                img={project.imageSrc}
-                name={project.title}
-                description={project.description}
-                onClick={() => window.open(project.url)}
-              />
+                {/* Projects Grid */}
+                <div
+                  className="
+        grid
+        grid-cols-1
+        tablet:grid-cols-2
+        laptop:grid-cols-2
+        gap-6
+      "
+                >
+                  {section.works.map((project) => (
+                    <WorkCard
+                      key={project.id}
+                      images={project.images}
+                      name={project.title}
+                      description={project.description}
+                      onClick={() =>
+                        window.open(
+                          project.url,
+                          "_blank",
+                          "noopener,noreferrer",
+                        )
+                      }
+                    />
+                  ))}
+                </div>
+              </div>
             ))}
-          </div>
+          </div>{" "}
         </div>
 
         {/* ================= SERVICES ================= */}

@@ -64,10 +64,11 @@ const IDCard = () => {
             </p>
 
             <div className={styles["id-details"]}>
-              <span>WEB</span>
-              <span>BACKEND</span>
+              <span>FASTAPI</span>
+              <span>Express.js</span>
+              <span>Machine Learning</span>
               <span>GO</span>
-              <span>REACT</span>
+              <span>LLMs & RAG</span>
             </div>
 
             <div className={styles["id-barcode"]}>
